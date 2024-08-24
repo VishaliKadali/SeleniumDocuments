@@ -1,0 +1,1194 @@
+Selenium Day2
+1.Methods, Access Medifiers
+2.Arrays
+3.String
+4.SOlving some problems
+
+1.Access modifier
+2.Return type - void, String, int...
+3.Name- Name of the method
+4. Input arguments - 0 or n arguments 
+
+public-Accessible across all the packages within the project 
+Private- Accessible only within the same class 
+Protected - Accessible in different packages also(Inheritance)
+Default: Accessible within different classes of same package..
+
+Shortcut keys: ctrl2, L
+
+Arrays(basic data structure): Group of values of same datatype
+When you want to store the values of same datatype
+Examples: employeeNames, employeeIds, Experience, MobileNumber
+
+Arrays are of fixed size, you need to specify it.
+You can't increment/decrement the values
+
+int[] marks={76, 85, 92, 56, 93}
+
+index starts with 0
+marks[0]--> 85
+marks[3]--> 56
+
+string[] names={"Babu", "Vishali", "Honey"}
+
+String[] names=new String[3];
+names[0] = "Haja";
+names[1]="Babu";
+names[2]="Hari";
+
+String is non primitive datatype(it is class)
+
+Type String (right click open declaration)
+
+
+https://assets.testleaf.com/assets/img/selenium.svg
+
+Day3: 
+Selenium basics
+What is Automation?
+ -Reduce manual efforts (Mechanically repeating)
+ -Save time and money
+
+Selenium: Jason Huggins -2004(IDE)
+-Execute in multiple platforms 
+-Execute in multiple browsers
+-Write scripts in any lang (Java, Python, C#, Ruby,....)
+
+
+ Execute in 
+2009 - Simon steward - webdriver --> Selenium WebDriver
+
+
+Mercury has owned --> QTP/UFT commericial/licensed/paid
+
+Othertools:
+1.Playwright
+2.Cypress - JS
+3.Webdriver.io -JS
+4.Puppeter
+
+Cannot do?
+-can automate excel sheet? No (Apache POI -JAva library
+-Can automate mainframe applications? No (WinAppDriver-JAva Library)
+-Can it talk to database? No-(JDBC - Java Library)
+-Can it automatte mobile based apps? No (Appium)
+-Can we performance testing? No (Jmeter/Gatling)
+-Can we use API testing? Partially Yes (Rest Assured)
+
+Selenium WebDriver
+
+Internal working of selenium
+
+
+W3C standards
+Edge - Launch
+Chrome - Open
+Firefox - Invoke
+Safari - get
+
+Dependencies
+
+selenium-java
+
+webdrivermanager
+
+selenium.dev
+
+selenium maven dependency
+
+search in the maven repository for maven dependencies
+
+once you add the dependencies, you can see the dependencies in mavendependencies in your project
+
+Ctrl+F12
+
+Tagname- Purple color(input)
+Attribute - brown (id, name)
+AttributeValues - blue(Details about id, name)
+Text - black (In between your tags)
+
+WebElement
+
+Locators: To interact with webelement we need locators
+1. id -->attribute
+2. name --> attribute
+3. linktext --> IT should have an anchor tag
+3. Classname --> attribute
+5.tagname
+6.partial linktext
+
+IllegalStateException - When we do not set the driver
+NoSuchElementException - When the lement with locator value is not found
+InvalidSelectorException - When the xpath is incorrect
+
+WebDriver:
+1.get
+2.findElement
+3.manage
+4.Close
+5.getTitle -->String
+6.getCurrentUrl -->String
+
+WebElement
+1. sendKeys - enters or appends text
+2. click
+3. clear - clear the text in the text field
+4. isEnabled - boolean
+5. getAttribute(id)- string
+6. getText
+7. isDisplayed - element is visible or not
+
+Dropdown:
+-It has a select tag
+-Select tag will have option tags
+
+1.Find the element of select tag
+2.Convert the element into select class
+3.Choose the value from dropdown
+	-selectByIndex
+	-selectByvisibleText
+	-selectByValue
+	
+	getFirstSelectedOptions()-->Get the text that is already selected
+	
+	List<WebElement> options=dd.getOptions();
+	for(int i=0; i<options.size();i++){
+	WebElement eachOption=options.get(i);
+	String text=eachOption.getText();
+	System.out.println(text);
+	}
+	
+	dd.selectByIndex(options.size()-2);
+	
+	
+	xpath
+	Document Object Model
+	
+	1.Absolute xpath
+		It starts with '/'
+		Tagname is mandatory
+		Need to start from root tag
+		when new tag is introduced, xpath breaks
+		difficult to write
+		
+	2.Relative xpath
+		It starts with '//'(skipping some tags)
+		-Tagname is mandatory
+		
+	Basic xpaths:
+	1.Attribute based xpath:
+		-//tagName[@attributeName='attributeValue']
+		
+		Ex: //input[@type='Password']
+		
+	2.Text based xpath
+		-//tagName[text()='textValue']
+		
+		Ex: //label[text()='Username']
+	
+	3. Partial Attribute based xpath:
+		-//tagName[contains(@attributeName,'attributeName')]
+		
+		Ex: //input[contains(@id,'user')]
+	
+	4. Partial Text based xpath:
+		-//tagName[contains(text(),'textValue')]
+		
+		Ex: //a[contains(text(),'CRM/SFA')]
+		
+	5. Index/ Collection based xpath:
+		-(//tagName)[index]
+		-(//tagName[@attribute='attributeValue'])[index]
+		-(//tagName[text()='textValue'])[index]
+		
+		Ex: (//input[@id='username'])[1]
+		
+		Do not prefer when index goes beyond 5
+		
+	Advanced xpaths
+	
+	1. Parent to child xpath
+			-basicXpath/childTagName
+				//p[@class='top']/label
+			Ex: //p[@class='top']/label[@for='username']
+			
+	2. Child to parent xpath
+			-basicXpathForChild/parent::parentTagName
+				//p[@class='top']/parent::form
+				
+	3.grandParent to grandchild xpath:
+			-basicxpathForGrandChild//grandChildTagName
+			Ex: //form[@id='login']//input[@id='password']
+	
+	4.grandChild to GrandParent xpath
+			-basicxpathForGrandChild/ancestor::grandParentTagName
+			Ex: //input[@id=userrname']/ancestor::form
+			
+	5.ElderSibling to youngerSibling xpath
+			-basicxpathForElderSibling/following-sibling::youngerSiblingTagName
+			Ex: //label[text()='USername']/following-sibling::input
+			
+	6.YoungerSiblling to ElderSibling xpath:
+			-basicXapthForYoungerSibling/preceding-sibling::label
+			Ex: //input[@id='username']/preceding-sibling::label
+			
+	7.ElderCousin to YoungerCousin xpath
+			-basicxpathForElderCousin/following::youngerCousinTagName
+			Ex: //label[text()='USername']/following::input[@id='password]
+			
+	8.YoungerCousin to ElderCousing xpath
+			-basicXpathForYoungerCousin/preceding::elderCousinTagName
+			Ex: //label[text()='Password']/preceding::input
+			
+	
+	Waits:
+	1.Implicit Wait
+	
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30))
+	2.Explicit Wait
+	
+	Thread.sleep(1000);
+	
+	
+	Week3>>Day1
+	
+	1.Java OOPS Intro, Abstraction
+	2.Interface, Abstract class
+	3.Inheritance
+	4.Polymorphism
+	5.Encapsulation
+	
+	Major takeaways : Interview questions related to OOPS
+	
+	Java OOPS
+	
+	OOPS - Object Oriented PRogramming (OOP) is a programming model based on the concept of 'objects', which can contain data and logic
+	
+	data-> variables and logic-> Methods
+	
+	Major Benefits:
+	
+	-Modularity
+	-Reusability
+	-Flexibility
+	-Efficient
+	
+	
+	-Abstraction
+	-Inheritance
+	-Polymorphism
+	-Encapsulation
+	
+	Architect - Design ->Paper
+	
+	Can you live in the design?
+	Design -> Build
+	
+	In Interface, we cannot create private methods(only default and public methods are allowed)
+	
+	Any development should start with design
+	
+	Design -> Interface
+	Partial Implementation > Abstraction Class
+	Full Implementation -> Concrete Class
+	
+	Keyword to connect interface to class: implements
+	Keyword to connect (abs) class to class: extends (inheritence)
+	
+	Inheritence:
+	JAva doesn't support multiple inheritence
+	JAva supports multilevel inheritence
+	
+	Class (sub)--------> Class(Super)
+	Keyword: extends
+	
+	Types: Single, Multilevel, Multiple(Not supported)
+	
+	
+	Interview PRep Structure !!
+	
+	A)Concept: Relationship between two similar types like class, interface where one is a super (parent) and other is sub (child) where the mmebers of the super can be inherited to the sub !!
+	
+	B) Example from JAva: Integer (sub) ---> Number (Super) --> Object
+	
+	C) Example from Selenium WebDriver:
+				ChromeDriver --> ChromiumDriver --> RemoteWebDriver ---> Object
+				
+Polymorphism
+	-Many forms of implementation
+	
+	Types:
+	-Overloading
+	-Overriding
+	
+	Overloading
+		-Same method name, Same method return type, Same method access modifier
+		-In the same class
+		-But with a different arguments
+		
+	Overriding
+		-Works only within inheritence
+		-Sub class method overrides the super class method
+		-Parent method signature should be same in the child as well.
+		-Purpose : Override old feature with new in specific class.
+		
+	Encapsulation: Binding private data with methods(using getter and setter methods)
+		-Data hiding
+		-USe getter and setter methods (click on yellow warning and select getter and setter methods
+		this : this refers to the local class variable
+		
+	public->We can access from anywhere
+	protected->Can be accessed as public within the package. Outside the package only inherited class can access
+	Default: Can able to access within the package
+	Private: Can able to access within the class only
+	
+	
+	Week3Day2
+	List & Set
+	Map
+	Constructor
+	JAva Keywords: this, static
+	
+	Single dimensional array
+	array.lenght-Used to get the size of the array
+	Arrays.sort()-Used to sort the array in descending order
+	
+	Limitations of array
+	Array size is fixed, cannot increase or decrease the size of an array
+	
+	How to overcome the limitations of array?
+	Collections
+	Single dimensional
+	
+	Parent interface for (List and Set) is Collection
+		-List is an interface
+		
+			List allows duplicate values
+			List maintains the insertion order
+			List implements, ArrayList and LinkedList
+			
+			Note: If there are no elements in the list, list size would be zero and no exception is thrown
+			
+			
+			//add() ->used to add values to a list
+			//size() ->USed to find the number of items in a list
+			//The first data index will be also 0
+			//last index size()-1
+			//To get the last data : values.get(count-1)
+									values.get(values.size()-1)
+			//remove() -> to remove data from the list
+			//To sort the data(Ascending order) -> Collections.sort(listname)
+			//To sort and reverse(descending order) -> Collections.reverse(listname);
+			//indexOf(Object) listName.indexOf("Babu");
+			//get(index)
+			
+			List: Can have duplicate elements
+			ArrayList:
+			=====================================
+			-Mostly used List in realtime
+			-Objects are stored as dynamic array with index 
+			-Faster to fetch objects (faster when compared to LinkedList)
+			-slower for data insert and delete(compared to LinkedList)
+			-non synchronized (faster when compared to vector)
+			
+			LinkedList:
+			=========================================================
+			-Store values in doubly linked list data structure
+			-Slower to fetch objects (compared to ArrayList)
+			-Faster for data insert and delete(compared to ArrayList)
+			
+			Vector:
+			=========================================================
+			-Legacy code for collection from 1.0
+			-Values are stored as dynamic array with index
+			-Synchronized(slower than ArrayList)
+			
+									
+			IndexOutOfBoundsException
+			
+			
+		
+		-Set is an interface
+		    Set doesn't allow duplicates(maintains unique values)
+			Set may or may not maintain insertion order
+			
+		
+		Set implements Hashset and LinkedHsshset and TreeSet
+		
+		Primitive Type		Wrapper Class
+		==============		==============
+		boolean 			Boolean
+		char				Character
+		byte				Byte
+		short				Short
+		int					Integer
+		long				Long
+		float				Float
+		double				Double
+		
+		/*
+		 * add()---Add the values to the set 
+		 * remove()--Remove values from the list 
+		 * size()--used to find the number of elements in a set
+		 * 
+		 * 
+		 *
+		 * Collections.reverse(<List>) -> to reverse the sorting
+		 * indexOf(object) -> Index of an item
+		 * 
+		 * Doesn't Allow duplicates in the set
+		 * Can get the elements from the list based on the index
+		 * Set can't allow any number of duplicates
+		 * 
+		 * Cannot get single data from the set
+		 * Set->Maintains the random data
+		 * Set->Doesn't maintain the order
+		 * 
+		 * LinkedHashSet->Maintains the insertion order
+		 * Treeset->Automatically sorts the data, maintains ASCII order
+		 * 
+		 */
+		 
+		
+		 
+	Map: It is an interface		
+	Two dimensional collection
+	Key & Value
+		-HashMap -> Random order
+		LinkedHashMap -> Insertion Order
+		TreeMap -> Ascii order
+		
+		Whenever there is duplicate key, it overrides the old value with new value.
+		
+		
+	Alerts:
+	1.Alerts
+	2.Frames
+	3.Windows
+	4.Taking a screenshot
+	5.Constructor
+	
+	Alert : Pop up or dialogue which provides some information
+	1.Modal dialogue
+		a) Simple alert - Information
+			-accept (positive), getText()
+		b) Confirm alert - confirmation
+			-accept(), getText(), dismiss()
+		c) Prompt alert (type some mesage and click ok or cancel)
+			-accept() (positive), getText(), dismiss(), sendKeys()
+		
+	Characteristics of alert
+		1. Cannot inspect an alert
+		2. Cannot interact with the main window unless the alert is handled
+		
+	Limitation of alert
+		1. Cannot take a snapshot
+		
+	2.Non-Model dialog
+		Sweet alert(you can inspect the alert)
+	
+	Exceptions:
+	1.UnhandledAlertException: When the alert is not present when you are trying to perform an action in main window
+	2.NoAlertPresentException: When the alert is not present when you are trying to perform an action
+	
+	Alert is an interface
+	Alert alert=driver.switchTo().alert();
+	alert.sendKeys("");
+	String alertText=alert.getText();
+	alert.accept();
+	
+	
+	Frames : DOM inside another DOM or html inside another html
+	To know whether there is frame or not (inspect- you will see the view frame source, reload frame)
+	
+	tagnames : frame/iframe
+	
+		-index	
+		-id or name
+		-WebElement
+	
+	Method overloading
+	driver.switchTo().frame("");
+	
+	NoSuchElementException
+	
+	Windows: Windows and tabs are treated same
+	
+	String parentWindow=driver.getWindowHandle();
+	Set<String> windowHandles=driver.getWindowHandles();
+	List<String> windows=new ArrayList<String>(windowHandles);
+	
+	//To get the size of the window
+	int windowsSize=windows.size();
+	System.Out.Println(windowsSize);
+	
+	File source=driver.getScreenshotAs(OutputType.FILE)
+	File destination=new File("./snap/snapshot.png");
+	FileUtils.copyFile(source, destination);
+	
+	Screenshot of the element
+	WebElement ele=driver.findElement(By.xpath(""));
+	File source=ele.getScreenShotAs(OutputType.FILE);
+	File destination=new File("./snaps/snapshot.png");
+	FileUtils.copyFile(source,destination);
+	dirver.close();
+	
+	constructor
+	
+	/*
+	 * Default constructor
+	 * Constructors are methods without any return type
+	 * name of the constructor is name of the class
+	 * Used to perform some common actions while creating objects
+	 */
+	 
+	 WebTables
+	 1.Static table
+	 2.Dynamic table
+	 
+	 you can provide multiple optional information in the xpath, it is like an and condition
+	 //a[contains(@class,'page')][@id='value']
+	 
+	 Actions class
+	 Actions action=new Actions(driver);
+	 
+	 If you see any apostrophe in the xpath, use double quotes in the xpath
+	 sanpdeal application
+	 //span[text()="Men's Fashion"]
+	 Copy and paste this xpath,it corrects the xpath
+	 It automatically adds the " " , called escape sequence
+	 
+	 
+	 How to freeze the page(F12_Source tab and click pause button or F5)
+	 
+	 
+	 -Testng Introduction
+	 -Convert normal testcase to TestNG tests
+	 -testng.xml file structure
+	 -execute sequentially and parallel model
+	 -testng annotations
+	 
+	 TestNG - Test NExt Generation:
+	 --------------------------------------
+	 Test Execution framework
+	 
+	 Features:
+	 ===============================================
+	 1. We can able to execute multiple testcases sequentially 
+	 2. We can able to execute multiple testcase parallely
+	 3. Provides the status of the testcases executed
+	 4. Will generate testng report for automation summary
+	 5. Suports Data Parameterization for testcase
+	 6. Supports Cross browser testing
+	 7. Testng assertion is used for verification and validation
+	 8. Group testcases : Categorize testcases based on groups
+	 9. Retry failed testcases programmatically
+	 10.Testcases execution can be controlled using annotations and attributes
+	 
+	 1. Navigate to https://github.com/TestLeafPages/SelSept2022/blob/main/testcase.zip
+	 2. Click Download
+	 3. Unzip the downloaded zip file
+	 4. Copy the extracted folder
+	 5. Paste the copied folder in src/main/java 
+	 
+	 Make sure have testng plugin(Go to Help eclipse market place installed plugins)
+	 
+	 How to convert normal testcase into testng testcase
+	 ----------------------------------------------------------
+	 -Change main() into normal method
+			-Remove String[] args
+			-Remove static keyword from method
+			-Change method name from main to someother
+	-Apply @Test above the method
+	Method with @Test -> Will be considered as testcase
+	
+	How to convert the normal testcase into testng.xml
+	1)Select the testcase>> RightClick >> Testng>>convert to Testng
+	
+	testng.xml
+	====================
+	Suite -> have one or more test set
+	
+	<suite name="Leaftaps"/>
+		<test thread-count="5" name="leads">
+			<classes>
+				<class name=testcase.CreateLead/>
+				<class name=testcase.EditLead/>
+			</classes>
+		</test>
+			
+		<test name="accounts">
+	</suite>
+
+	Comment in testng ctrl+shift+/
+	To uncomment: ctrl+shift+\	or source >>Add block comment
+	Alignment: ctrl+shift+F
+
+	To execute the testcases in parallel, select testcases convert into testng xml and select parallel mode=classes
+
+	Testng reports>>> test-output folder >> emailable report.html >> open with system editor
+
+	Failure log in console
+	----------------------
+	To get the failure log in the console verbose=5 (range of values = 0 - 10) 0=no log 10=maximum log
+	
+	
+	Create a folder(package)
+		Select package>> rightclick>> testng>> create testng class
+		Modify the source folder name(while creating testng class)
+		
+		@Test is the mandatory annotation
+		
+		@Before ->
+		--------------
+		All the annotations starting with @Before will run before the testcases
+		These annotations will be used for pre-conditions
+		
+		@After ->
+		----------------
+		Will be executed after the testcase execution
+		Will be used for post-conditions (teardown)
+		
+		@BeforeSuite
+			@BeforeTest
+				@BeforeClass
+					@BeforeMethod
+						@Test
+					@AfterMethod
+				@AfterClass
+			@AfterTest
+		@AfterSuite
+		
+	Note: If there are two or more @Test methods, for every @Test method @BeforeMethod and @AfterMethod will be executed for each and every testcase
+	
+	Assignment
+	1.Create a baseclass
+	2.All the testcase class should extend Baseclass
+	3. Create 2 methods preCondition() and postCondition with @BeforeMethod and @AfterMethod
+	4. Move the appropritate codes into preCondition() and postCondition()
+	5. Declare the ChromeDriver as global variable
+	6. Remove the local declaration for driver in preCondition()
+	7. Remove the common codes from all the testcases
+	
+	Slef assessment:
+	=========================
+	1.How can we execute multiple testcases sequentially using testNG?
+		Using testng.xml file
+	2.What is the attribute to run the testcases in parallel mode?
+		parallel="classes" or parallel="tests" or parallel="methods"
+	3.I have 10 testcases in testng.xml file. If I use parallel ="classes", how many parallel thread gets executed
+	4. If you want to restrict the number of parallel execution, what is the attribute?
+		thread-count=2
+	5.What is the attribute to get the failure log in console?
+		verbose
+	6.What is the valid range for verbose and default value for verbose	
+		0-10;
+	7.What is the TestNG annotation execution order?
+		@BeforeSuite
+			@BeforeTest
+				@BeforeClass
+					@BeforeMethod
+						@Test
+					@AfterMethod
+				@AfterClass
+			@AfterTest
+		@AfterSuite
+		
+	Official TestNG website: https://testng.org/
+	
+	
+	TestNG attributes(All attributes are methods)
+	=======================================================
+	invocationCount=2 (dataType=int)
+	If you dont setup the invocation count, testng will automatically consider it as 1
+	
+	threadPoolSize (dataType = int)
+	
+	priority=1 (dataType=int), default value=0, if priority is not set, it sets the value as 0
+	
+	enabled=false/true (datatype=boolean)
+	
+	dependsOnMethods="CreateLead" datatype=string
+	Testcase is skipped when the dependent method is failed 
+	
+	One testcase can depend on multiple testcases
+	dependsOnMethods= {"createLead","EditLead"}
+	
+	Parameterization
+	1.Static 
+	2.Dynamic
+	
+	
+	Static
+	
+	-Data that are common for all testcases
+	-Singular data
+	-Parameter
+	
+	Examples: 
+	USername, Password, URL
+	
+	Steps to create parameters in TestNG
+	1)Go to XML nd create parameter as tag, name - value
+		You can create as many as you want
+	2)In the annotation (@BeforeMethod), create annotation (@Parameters) and 
+		-name matters
+		-order does not matter
+		Note: IT is not mandatory to get all paramters. Based on need, receive as many a you want.
+	3)Within @Test annotated method, receive the arguments from paramters
+		-Order matters
+		-name does not matter
+	-Note: You need to receive all parameters from @Parameters
+	
+	Things to note:
+	-You cannot run from the testcases once paramterized from XML
+	-Always have to run from XML
+	
+	Dynamic(Data that are specific to test and may be in multiples
+	//DataProvider
+	
+	Examples : FirstName, LastName, CompanyName (Only for Create Lead)
+	1)Identify the test data of the @Test method and convert into arguments
+	2)Create DataProvider method with annotation @DataProvider with a name attribute to link @Test
+	3)Return type -> Object[][] and hence build data for multiple dataset
+	4)Connect the @Test and DataProvider using name like 
+		@Test(dataProvider="Create")
+	5)Finally, argument the method and run 
+	
+	Apache POI:
+	-Opensource Java library to talk to microsoft office
+	-Excel, word, PPT, Outlook, Publisher, Access..
+	-Goal: Help you how to read the excel data
+	
+	Extensions: xlsx, xls, xlsm..
+	
+	Excel Hierarchy:
+	WorkBook
+		WorkSheet
+			Row
+				Column (Cell)
+				Cell is combination of row and column
+	For Loop: select the rows>> Rightclick>>Surround with for loop
+	Step by step to read the data
+	1.Manually create excel with 3 data for create lead and copied to data folder of the project
+	2.USe XSSF to read the workbook
+	
+	
+	Cucumber Framework1
+	Cucumber : BDD (Behaviour Driven Development)
+	
+	Waterfall model
+		-Dvelopment will start once you get all the requirement
+		-Testing will start once the development is completed
+		
+	-Write the test cases first
+	-Get the approval for the testcase
+	-Development should be based on the testcases
+	
+	Cons: 
+		- Lof of negative testcases covered rather than positive
+	
+	ATDD - Acceptance Test Driven Development
+		-Write the acceptance testcases first
+		-Develop the software based on it
+		
+	Cons:
+		-Communication gap between the technical and non-technical team
+		
+	BDD - Behavioural Driven Development
+		- To address the communcation gap between tech and non technical team
+		- Write acceptance testcases first using common language
+	Cucumber uses Gherkin language
+	Gherkin Keywords
+	Feature - Describes the functionality of the application 
+	Scenario - Describe a behaviour/ testcase
+	Given - Represent a preCondition
+	When - Represent the test condition/step
+	Then - Represent the expected result
+	But - Represent the expected result (Negative scenario)
+	
+	
+	
+	Given Launch the browser
+	Given Load the URL
+	Given Maximize the window
+	When Enter the username
+	When Enter the Password
+	When Click on Login
+	Then verify Home page is displayed
+	
+	
+	3 Layers:
+	- Features 					File to write the testcases 
+	- Step Definitions			Implement the testcases using Selenium/Java
+	- Runner					TestNG for execution (JUnit)
+	
+	NullPointerException:
+	
+	Java cannot share the memory of one class to another class (session ID is not passed to another class)
+	
+	You have the BaseClass with public Chrome driver;
+	
+	and Your another class extends BaseClass (Login) one more class (CreateLead) extends BaseClass
+	
+	When you execute your tests, your session ID is not shared to another class, so you need to declare the (public static chrome driver) in BaseClass (Java will make sure that it holds a common memory) whenever there is new value, it will override
+	==========================================================================
+	
+	Feature: Leaftaps application
+	
+	Background: 
+	Given Launch the Chrome Browser
+	And Load the URL and maximize 
+	
+	Scenario Outline: Create Lead with Mandatory details
+	
+	When Enter Username as <username>
+	And Enter Password as <password>
+	And Click Login
+	And Click CRMSFA
+	Then Verify homepage is displayed
+	
+	Examples: 
+	|username|password|
+	|DemoSalesManager|crmsfa|
+	
+	Examples in BDD work like a DataProvider, you can run multiple set of data
+	Background: Common steps executed for each and every scenario
+	Hooks: Hooks are like Pre condition and post condition
+	
+	@When("Enter username as (.*)$ and password as (.*)$)
+	(.*) are regular expressions that match any text and capture it for use in the step definition method.
+	The $ at the end ensures that the string ends after the second (.*), meaning it will match the entire line.
+	
+	(.*)$ - Indicates any number of characters (any data with any number of characters)
+	@@@@@@@@@@@@@@@@@@@			BDD Exceptions		@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		-InvalidMethodException
+			Cucumber will not allow you to extend stepdefinition to hooks or hooks to stepdefinition
+		   
+		-DuplicateStepDefinitionException
+		-NullPointerException
+		-UndefinedStepException
+		
+	1.TestngGroups
+	2.Cucumber Tags
+	3. Hooks
+	4.TestNG Assertions
+	5. TestNG Listeners
+	6. TestNG Cross browser Execution
+	7. Explicit Wait
+	
+	TestNG groups
+	
+	Create a class
+	
+	@Test(groups={"regression","smoke"})
+	public void test1(){
+	System.out.println("Test1");
+	}
+	
+	@Test(groups={"Sanity"}, dependsOnGroups = {"smoke"})
+	public void test2() {
+	System.out.println("Test2");
+	}
+	
+	select the class >>>>Rightclick convert into testNg.xml
+	
+	If you want to execute only sanity at the suite level
+	<groups>
+		<run>
+			<include> name="sanity" </include>
+			<exclude> name="smoke" </exclude>
+		</run>
+	</groups>
+	
+	
+	Threadlocal: Supports parallel execution with the help of thread which cannot be achieved by declaring public static ChromeDriver and also parallel execution in cucumber is not possible because of public static chromeDriver, it can be achieved only through threadlocal
+	You can manage the threads individually
+	
+	public class ProjectSpecificMethods extends AbstractTestNGCucumberTests {
+	
+	private static final TheadLocal<ChromeDriver> tlDriver =new TheadLocal<ChromeDriver>();
+	public static chromeDriver driver;
+	public string fileName;
+	
+	//replace driver with tlDriver//set and get the driver
+	@BeforeMethod
+	public void preCondition(){
+	WebDriverManager.chromeDriver().setup();
+	//driver = new ChromeDriver();
+	//tlDriver.set(driver);
+	tlDriver.set(new ChromeDriver());
+	System.out.println(driver);
+	tlDriver.get().manage().window().maximize();
+	tlDriver.get("http://leaftaps.com/opentaps");
+	tlDriver.get()manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+	}
+	
+	@AfterMethod
+	public void postCondition(){
+	 tlDriver.get().close()
+	 }
+**Note:  In all the pages replace driver with tlDriver
+
+Your ProjectSpecificMethods Should extent AbstractTestNGCucumberTests
+	 
+	 
+	 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 You can use encapsulation to set the driver and get the driver
+	 public void setDriver(ChromeDriver driver){
+		tlDriver.set(driver);
+	}
+	
+	public ChromeDriver getDriver(){
+		return tlDriver.get();
+	}
+	
+	@BeforeMethod
+	public void preCondition(){
+	WebDriverManager.chromeDriver().setup();
+	//driver = new ChromeDriver();
+	//tlDriver.set(driver);
+	setDriver(new ChromeDriver());
+	System.out.println(driver);
+	getDriver().manage().window().maximize();
+	getDriver.get("http://leaftaps.com/opentaps");
+	getDriver.get()manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+	}
+	
+	@AfterMethod
+	public void postCondition(){
+	 getDriver.get().close()
+	 }
+	 
+	In your pages also please replace driver with getDriver()
+	
+	**Note : Implement threadlocal to acheive parallel execution in cucmber with different set of data using examples and also 
+			in your runner file you need to provide this 
+			@DataProvider(parallel=true)
+			public object[][] scenarios(){
+			return super.scenarios();
+			}
+			
+			
+	If you are putting parallel=true in DataProvider, it will execute in parallel with different set of data
+	If you are putting parallel = classes in testng, it will execute your testcases in parallel.
+	
+	TestNG Assertions
+		-Validation or verification
+		-Comparing the actual and expected results
+		
+		-Hard Assertion
+		-Soft Assertion
+		
+		TestNG Listeners
+			
+		Retry:
+			-IRetryAnalyzer (automatically retrying the failed test)
+			- AnnotationTransformer (set attribute value during runtime
+		
+		Parallel Execution in testng(ThreadLocal)
+		There was problem with static and parameterized constructor
+		
+		Parameterized constructor is not possible in cucumber, so we go for ThreadLocal to perform parallel execution
+		
+		private static final ThreadLocal<ChromeDriver> tlDriver=new ThreadLocal<ChromeDriver>();
+		In your dataProvider include parallel = true, constructor based implementation in cucumber will not work
+		
+		final is for constant value
+		static is for constant memory
+		
+		
+		HybridFrameword:
+		
+	Exceptions
+		-Compiletime Exception
+			-IO Exception
+			-Uninterrupted Exception
+		-Runtime Exception
+			-All selenium Exceptions are runtime exceptions
+				-NoSuchElementException (unable to access elements on webpage)
+				-NoSuchFrameException(Switching between multiple frames is not possible
+				-NoSuchWindowException(Previous window doesn't exist)
+				-NoAlertPresentException(Trying to switch the alert which is not present)
+				-InvalidSelectorException (This exception occurs due to an incorrect selector)
+				-TimeoutException(If the command did not execute or complete within wait time)
+				-ElementNotVisibleException(Element is not present in the webpage, but the element cannot be visible)
+				-ElementNotSelectableException(Element present, but cannot be selected)
+				-NoSuchSessionException(Occurs when the browser is closed, browser crash)
+				-StaleElementReferenceException(Occurs when the element is no longer present in the DOM,(Document Object Model)
+				-UnhandledAlertException(
+				
+	To handle exceptions 
+		1)try
+		2)Catch
+	
+		-Apply try/catch block
+		-Catch block will be executed only if there is an exception
+		-We cannot have try block alone
+		-We cannot have catch alone
+		-All the exceptions are classes
+		-Supermost class should be at the end 
+		-Finally block will be executed, irrespective of exceptions
+		
+		throws: USed at method level, to throw the compiletime exceptions i/O exception, uninterruptedException
+		throw: You can create your own exception
+		
+		
+	Extent Report: Avenstack - 3.1.5 
+		-Generate html report
+		-Can attach screenshot for each step
+		-Can have report based on different author
+		-Can have report based on different category
+		-Consolidated Dahsboard with pie charts
+	
+	//Setup the physical report path
+	ExtentHtmlReporter reporter=new ExtentHtmlReporter("./reports/report.html");
+	
+	//Create an object for Extent Reports
+	ExtentReports extent=new ExtentReports();
+	
+	//Attach the data with physical file
+	extent.attachReporter(reporter);
+	
+	//Create a testcase
+	ExtentTest test=extent.createTest("Create Lead", "Create Lead with mndatory details");
+	test.assignAuthor("Kadali");
+	test.assignCategory("Smoke");
+	test.pass("USername is entered");
+	
+	====================HybridFramework=======================
+	com.framework.selenium.api.base
+	com.framework.selenium.api.design
+		Browser.java
+		Element.java
+		Locators.java (ID, XPATH, CLASS_NAME, CSS, LINK_TEXT, PARTIAL_LINKTEXT, TAGNAME
+	com.framework.selenium.testng.api.base
+	com.framework.selenium.utils
+	com.framework.selenium.pages
+	com.framework.selenium.testcases
+	
+	pom.xml
+	testng.xml
+	
+	Cucumber exceptions
+	DuplicateStepDefinitionException(When there are two methods with same name)
+	UndefinedStepException(When the method was not implemented)
+	InvalidMethodException(Extending one stepDefintion in another-driver reference)
+	NullpointerException-JAva Exception (When driver was null - implement static)
+	
+	
+		
+		
+Relative locators in Selenium (introduced in Selenium 4) are a feature that allows you to locate web elements based on their position relative to other elements on the page. They can be particularly useful when the target element doesn't have a unique identifier like an ID, name, or class, but its position relative to other elements is consistent.
+
+Here are the main relative locators provided by Selenium:
+
+above(): Locates an element that is located above a specified element.
+below(): Locates an element that is located below a specified element.
+toLeftOf(): Locates an element that is located to the left of a specified element.
+toRightOf(): Locates an element that is located to the right of a specified element.
+near(): Locates an element that is near (within 50 pixels by default) to a specified element.
+Example Usage in Java:
+java
+Copy code
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import static org.openqa.selenium.support.locators.RelativeLocator.*;
+
+public class RelativeLocatorExample {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+        WebDriver driver = new ChromeDriver();
+        
+        driver.get("https://example.com");
+
+        WebElement referenceElement = driver.findElement(By.id("referenceElementId"));
+        
+        // Locate an element that is above the reference element
+        WebElement elementAbove = driver.findElement(with(By.tagName("input")).above(referenceElement));
+        
+        // Locate an element that is below the reference element
+        WebElement elementBelow = driver.findElement(with(By.tagName("input")).below(referenceElement));
+        
+        // Locate an element that is to the left of the reference element
+        WebElement elementToLeft = driver.findElement(with(By.tagName("input")).toLeftOf(referenceElement));
+        
+        // Locate an element that is to the right of the reference element
+        WebElement elementToRight = driver.findElement(with(By.tagName("input")).toRightOf(referenceElement));
+        
+        // Locate an element that is near the reference element (within 50 pixels by default)
+        WebElement elementNear = driver.findElement(with(By.tagName("input")).near(referenceElement));
+        
+        driver.quit();
+    }
+}
+
+Key Points:
+with(By locator): The with() method is used to specify the base locator that identifies the type of elements you're interested in (like By.tagName("input")).
+The relative locator methods (above(), below(), toLeftOf(), toRightOf(), near()) are then chained to with() to describe the spatial relationship.
+These locators can make your tests more resilient by relying on the visual structure of the web page rather than specific attributes, which can change more frequently.
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+	
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
+			
+		
+	
+		
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
